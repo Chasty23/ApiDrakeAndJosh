@@ -38,3 +38,4 @@ C:\Users\Chasty\Desktop\steven\Practicas\PracticaC#\CrudAsp\api\bin\Debug\net9.0
 C:\Users\Chasty\Desktop\steven\Practicas\PracticaC#\CrudAsp\api\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
 C:\Users\Chasty\Desktop\steven\Practicas\PracticaC#\CrudAsp\api\bin\Debug\net9.0\SharpGrip.FluentValidation.AutoValidation.Mvc.dll
 C:\Users\Chasty\Desktop\steven\Practicas\PracticaC#\CrudAsp\api\bin\Debug\net9.0\SharpGrip.FluentValidation.AutoValidation.Shared.dll
+C:\Users\Chasty\Desktop\steven\Practicas\PracticaC#\CrudAsp\api\obj\Debug\net9.0\api.sourcelink.json
