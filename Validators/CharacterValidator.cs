@@ -17,7 +17,7 @@ public class CharacterValidator : AbstractValidator<Character>
         .Length(3, 50).WithMessage("Surname Length between 3 and 50");
 
         RuleFor(c => c.IdGender).NotEmpty().NotNull().WithMessage("IdGender is required");
-        RuleFor(c => c.IdPhrases).NotEmpty().NotNull().WithMessage("IdPhrases is required");
+        RuleFor(c => c.Phrases).NotNull().WithMessage("Phrases is required");
         RuleFor(c => c.PathImage).NotEmpty().NotNull().WithMessage("PathImage is required");
         RuleFor(c => c.DateBirthDay).NotEmpty().NotNull().WithMessage("DateBirthDay is required");
     }
