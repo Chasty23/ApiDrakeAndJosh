@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Chasty\\Desktop\\steven\\Practicas\\PracticaC#\\CrudAsp\\api\\api.csproj": {}
+    "c:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Chasty\\Desktop\\steven\\Practicas\\PracticaC#\\CrudAsp\\api\\api.csproj": {
+    "c:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Chasty\\Desktop\\steven\\Practicas\\PracticaC#\\CrudAsp\\api\\api.csproj",
+        "projectUniqueName": "c:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\Chasty\\Desktop\\steven\\Practicas\\PracticaC#\\CrudAsp\\api\\api.csproj",
+        "projectPath": "c:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\api.csproj",
         "packagesPath": "C:\\Users\\Chasty\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Chasty\\Desktop\\steven\\Practicas\\PracticaC#\\CrudAsp\\api\\obj\\",
+        "outputPath": "c:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -66,6 +66,20 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
             },
             "Riok.Mapperly": {
               "target": "Package",
