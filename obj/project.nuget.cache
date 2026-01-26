@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Gk3TYqvq67I=",
+  "dgSpecHash": "OkRhlnUpl/I=",
   "success": true,
-  "projectFilePath": "c:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Chasty\\.nuget\\packages\\fluentresults\\4.0.0\\fluentresults.4.0.0.nupkg.sha512",
     "C:\\Users\\Chasty\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
@@ -57,15 +57,5 @@
     "C:\\Users\\Chasty\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\Chasty\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "message": "Problem reading the cache file c:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
-      "projectPath": "c:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\api.csproj",
-      "warningLevel": 1,
-      "filePath": "c:\\Users\\Chasty\\Desktop\\steven\\projects\\ApiDrakeAndJosh\\api\\api.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "logs": []
 }
