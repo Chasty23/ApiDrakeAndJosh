@@ -177,3 +177,4 @@ C:\Users\Chasty\Desktop\steven\projects\ApiDrakeAndJosh\api\obj\Debug\net9.0\swa
 C:\Users\Chasty\Desktop\steven\projects\ApiDrakeAndJosh\api\obj\Debug\net9.0\api.csproj.Up2Date
 C:\Users\Chasty\Desktop\steven\projects\ApiDrakeAndJosh\api\obj\Debug\net9.0\api.genruntimeconfig.cache
 C:\Users\Chasty\Desktop\steven\projects\ApiDrakeAndJosh\api\obj\Debug\net9.0\ref\api.dll
+C:\Users\Chasty\Desktop\steven\projects\ApiDrakeAndJosh\api\bin\Debug\net9.0\api.staticwebassets.runtime.json

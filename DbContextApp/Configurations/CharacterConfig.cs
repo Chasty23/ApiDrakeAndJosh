@@ -46,25 +46,21 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
         {
             // Configuración del Dia
             statsDateBuilder.Property(b => b.Day)
-                .HasColumnName("Day")
-                .IsRequired(false)
-                .HasColumnType("int");
+                .HasColumnName("Day");
+
 
             // Configuración del Mes
             statsDateBuilder.Property(b => b.Month)
-                .HasColumnName("Month")
-                .IsRequired(false)
-                .HasColumnType("int");
+                .HasColumnName("Month");
+
         });
 
         // Las restricciones de verificación para el mes y dia
         builder.ToTable(t =>
         {
             // Restricción para el Día: entre 1 y 31
-            t.HasCheckConstraint("CK_Character_Day_Range", "([Day] IS NULL OR ([Day] >= 1 AND [Day] <= 31))");
-
-            // Restricción para el Mes: entre 1 y 12
-            t.HasCheckConstraint("CK_Character_Month_Range", "([Month] IS NULL OR ([Month] >= 1 AND [Month] <= 12))");
+            t.HasCheckConstraint("CK_Character_Day_Range", "(\"Day\" IS NULL OR (\"Day\" >= 1 AND \"Day\" <= 31))");
+            t.HasCheckConstraint("CK_Character_Month_Range", "(\"Month\" IS NULL OR (\"Month\" >= 1 AND \"Month\" <= 12))");
         });
 
 
