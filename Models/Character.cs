@@ -1,7 +1,7 @@
 
 namespace api.Models;
 
-public record BirthDay(int Day, int Month);
+public record BirthDay(int? Day, int? Month);
 
 public class Character
 {
@@ -12,7 +12,7 @@ public class Character
     public required int IdGender { get; set; }
     public ICollection<Phrases> Phrases { get; set; } = [];
     public string PathImage { get; set; } = "Unknown";
-    public BirthDay? DateBirthDay { get; set; }
+    public BirthDay DateBirthDay { get; set; } = new BirthDay(0, 0);
     public Gender? Gender { get; set; }
 }
 
