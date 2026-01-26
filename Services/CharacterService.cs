@@ -13,8 +13,26 @@ public class CharacterService : ICharacterService
     public CharacterService(CharacterMapper characterMapper)
     {
         _characterMapper = characterMapper;
-        _characters.Add(new Character { Id = 1, Name = "Drake", Surname = "Parker", IdGender = 1, IdPhrases = 1, PathImage = "", DateBirthDay = new BirthDay(21, 12) });
-        _characters.Add(new Character { Id = 2, Name = "Josh", Surname = "Nicols", IdGender = 1, IdPhrases = 1, PathImage = "", DateBirthDay = new BirthDay(22, 10) });
+        _characters.Add(new Character
+        {
+            Id = 1,
+            Name = "Drake",
+            Surname = "Parker",
+            NameRealComplete = "Drake Parker",
+            IdGender = 1,
+            PathImage = "",
+            DateBirthDay = new BirthDay(21, 12)
+        });
+        _characters.Add(new Character
+        {
+            Id = 2,
+            Name = "Josh",
+            Surname = "Nicols",
+            NameRealComplete = "Josh Nicols",
+            IdGender = 1,
+            PathImage = "",
+            DateBirthDay = new BirthDay(22, 10)
+        });
     }
 
     public Task<List<CharacterDto>> GetAll()
@@ -52,7 +70,7 @@ public class CharacterService : ICharacterService
         characterToUpdate.Name = character.Name;
         characterToUpdate.Surname = character.Surname;
         characterToUpdate.IdGender = character.IdGender;
-        characterToUpdate.IdPhrases = character.IdPhrases;
+        characterToUpdate.Phrases = character.Phrases;
         characterToUpdate.PathImage = character.PathImage;
         characterToUpdate.DateBirthDay = character.DateBirthDay;
         return Task.FromResult(characterToUpdate);
