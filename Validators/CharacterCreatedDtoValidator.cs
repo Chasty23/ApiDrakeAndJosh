@@ -23,11 +23,13 @@ public class CharacterCreatedDtoValidator : AbstractValidator<CharacterCreatedDt
         .GreaterThan(0).WithMessage("IdGender must be greater than 0")
         .WithMessage("IdGender is required");
 
-        RuleFor(c => c.IdPhrases)
+        /*RuleFor(c => c.IdPhrases)
         .NotEmpty()
-        .NotNull()
-        .GreaterThan(0).WithMessage("IdPhrases must be greater than 0")
-        .WithMessage("IdPhrases is required");
+        .NotNull();*/
+        RuleFor(x => x.DateBirthDay)
+            .SetValidator(new BirthDayValidator())
+            .When(x => x.DateBirthDay != null);
+
         RuleFor(c => c.PathImage).NotEmpty().NotNull().WithMessage("PathImage is required");
     }
 }
