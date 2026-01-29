@@ -5,9 +5,9 @@ namespace api.DbContextApp;
 
 public class AppContextDb : DbContext
 {
-    DbSet<Character> Characters { get; set; }
-    DbSet<Gender> Genders { get; set; }
-    DbSet<Phrases> Phrases { get; set; }
+    public DbSet<Character> Characters { get; set; }
+    public DbSet<Gender> Genders { get; set; }
+    public DbSet<Phrases> Phrases { get; set; }
 
     public AppContextDb(DbContextOptions<AppContextDb> options) : base(options)
     {
