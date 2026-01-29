@@ -43,9 +43,11 @@ public class CharacterController : ControllerResponse
     }
 
     [HttpPost]
-    public async Task<ActionResult> Add([FromBody] CharacterCreatedDto character)
+    public async Task<ActionResult<CharacterCreatedDto>> Add(CharacterCreatedDto characterDto)
     {
-        var newCharacter = await _characterService.Add(character);
+
+
+        var newCharacter = await _characterService.Add(characterDto);
         if (newCharacter.IsFailed)
         {
             var errorMessage = newCharacter.Errors[0].Message;
