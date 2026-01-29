@@ -11,8 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-builder.Services.AddSingleton<ICharacterService, CharacterService>();
-builder.Services.AddSingleton<CharacterMapper>();
+
+builder.Services.AddScoped<ICharacterService, CharacterService>();
+builder.Services.AddScoped<IGenderService, GenderService>();
+builder.Services.AddScoped<IPhraseService, PhraseService>();
+
+builder.Services.AddScoped<CharacterMapper>();
+builder.Services.AddScoped<PhrasesMapper>();
+
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CharacterValidator>();
 builder.Services.AddDbContextPool<AppContextDb>(options =>
