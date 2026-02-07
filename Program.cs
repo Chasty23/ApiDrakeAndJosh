@@ -6,11 +6,35 @@ using api.Validators;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using Microsoft.EntityFrameworkCore;
 using api.DbContextApp;
+using Asp.Versioning;
+using api.Errors;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+
+builder.Services.AddErrorObjects<ApiVersioningError>().AddProblemDetails();
+
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer<ApiVersionHeaderTransformer>();
+});
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = new HeaderApiVersionReader("X-Version");
+})
+.AddMvc()
+.AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
 
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IGenderService, GenderService>();
