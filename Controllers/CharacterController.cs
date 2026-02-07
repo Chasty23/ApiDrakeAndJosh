@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using api.Services;
 using api.Models;
 using api.Utils;
-using FluentResults;
 using api.Dtos;
+using Asp.Versioning;
 
 namespace api.Controllers;
 
 [ApiController]
+[ApiVersion("1.0")]
 [Route("api/[controller]")]
 public class CharacterController : ControllerResponse
 {
