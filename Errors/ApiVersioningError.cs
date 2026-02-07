@@ -1,6 +1,4 @@
 using Asp.Versioning;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace api.Errors;
@@ -16,10 +14,9 @@ public class ApiVersioningError : ErrorObjectWriter
         context.ProblemDetails.Type = "https://httpstatuses.com/400";
         context.ProblemDetails.Title = "Bad Request";
         context.ProblemDetails.Status = StatusCodes.Status400BadRequest;
-        context.ProblemDetails.Detail = "No existe la version de la api";
+        context.ProblemDetails.Detail = $"No exist the version {context.HttpContext.Request.Headers["X-Version"]} - Use the version 1.0";
         context.ProblemDetails.Instance = context.HttpContext.Request.Path;
     }
-
 
 }
 

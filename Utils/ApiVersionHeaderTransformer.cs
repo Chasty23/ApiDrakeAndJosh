@@ -10,7 +10,7 @@ public class ApiVersionHeaderTransformer : IOpenApiDocumentTransformer
         {
             foreach (var operation in path.Operations.Values)
             {
-                //Eliminamos cualquier rastro previo de X-Version para evitar duplicados
+
                 var existingParam = operation.Parameters
                     .FirstOrDefault(p => p.Name.Equals("X-Version", StringComparison.OrdinalIgnoreCase));
 
