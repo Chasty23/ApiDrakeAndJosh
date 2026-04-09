@@ -23,11 +23,11 @@ public class CharacterController : ControllerResponse
     public async Task<ActionResult> GetAll()
     {
         var characters = await _characterService.GetAll();
-        if (characters.Count == 0)
+        if (characters.IsFailed)
         {
-            return SuccessResponse(characters, "Empty Characters");
+            return ErrorResponse(characters.Errors[0].Message, StatusCodes.Status404NotFound);
         }
-        return SuccessResponse(characters);
+        return SuccessResponse(characters.Value);
     }
 
     [HttpGet("{id}")]
@@ -59,10 +59,15 @@ public class CharacterController : ControllerResponse
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, [FromBody] Character character)
+    public async Task<ActionResult> Update(int id, CharacterCreatedDto characterDto)
     {
-        var updatedCharacter = await _characterService.Update(id, character);
-        return SuccessResponse(updatedCharacter, "Character Updated");
+        var updatedCharacter = await _characterService.Update(id, characterDto);
+        if (updatedCharacter.IsFailed)
+        {
+            var errorMessage = updatedCharacter.Errors[0].Message;
+            return ErrorResponse(errorMessage, StatusCodes.Status400BadRequest);
+        }
+        return SuccessResponse(updatedCharacter.Value, "Character Updated");
     }
 
 
