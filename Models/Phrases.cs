@@ -10,7 +10,6 @@ public class Phrases
 
     public Character? Character { get; set; }
 
-
 }
 
 
