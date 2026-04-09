@@ -1,0 +1,8 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0
+WORKDIR /app
+
+# Exponer puertos de desarrollo (HTTP)
+EXPOSE 8080
+
+# Usamos dotnet watch para que reinicie con cada cambio de código
+ENTRYPOINT ["dotnet", "watch", "run", "--urls=http://0.0.0.0:8080"]

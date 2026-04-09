@@ -1,0 +1,31 @@
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: api_dev_net9
+    ports:
+      - "5000:8080" # Accedes en tu navegador vía localhost:5000
+    volumes:
+      - .:/app    # <--- MAPEADO: Sincroniza tu carpeta local con /app en el contenedor
+    environment:
+      - DOTNET_USE_POLLING_FILE_WATCHER=1 # Necesario en Linux/Lubuntu para detectar cambios de archivos
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=drakeandjosh;Username=dev;Password=chastyAdmin
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17 # Una versión reciente y estable
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: drakeandjosh
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: chastyAdmin
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
