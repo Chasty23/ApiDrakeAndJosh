@@ -8,11 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using api.DbContextApp;
 using Asp.Versioning;
 using api.Errors;
-
+using api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ErrorMiddleware>();
 
 builder.Services.AddErrorObjects<ApiVersioningError>().AddProblemDetails();
 
@@ -65,6 +68,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseExceptionHandler();
 app.MapControllers();
 
 
