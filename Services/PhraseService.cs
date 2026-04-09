@@ -4,6 +4,7 @@ using api.Models;
 using api.DbContextApp;
 using api.Mappers;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace api.Services;
 
@@ -21,11 +22,18 @@ public class PhraseService : IPhraseService
         _mapper = mapper;
     }
 
-    public Task<List<PhraseDto>> GetAll()
+    public async Task<Result<List<PhraseDto>>> GetAll()
     {
-        throw new NotImplementedException();
-    }
+        var entities = await _context.Phrases.ToListAsync();
 
+        if (entities == null || !entities.Any())
+        {
+            return Result.Fail("Phrases not found");
+        }
+
+        var phrasesDtos = entities.Select(p => _mapper.ToDto(p)).ToList();
+        return Result.Ok(phrasesDtos);
+    }
     public async Task<Result<PhraseDto>> Add(PhraseDto phrase)
     {
         if (phrase == null)
@@ -39,9 +47,9 @@ public class PhraseService : IPhraseService
         }
         var phraseEntity = _mapper.ToCreatedEntity(phrase);
 
-        _context.Phrases.Add(phraseEntity);
+        await _context.Phrases.AddAsync(phraseEntity);
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         _logger.LogDebug("Phrase added successfully");
 
