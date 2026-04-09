@@ -4,6 +4,7 @@ using FluentResults;
 using api.Mappers;
 using api.DbContextApp;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 
 namespace api.Services;
@@ -22,9 +23,15 @@ public class CharacterService : ICharacterService
 
     }
 
-    public Task<List<CharacterDto>> GetAll()
+    public async Task<Result<List<CharacterDto>>> GetAll()
     {
-        return Task.FromResult(_context.Characters.Select(_characterMapper.ToDto).ToList());
+        List<Character> characters = await _context.Characters.ToListAsync();
+        if (characters == null)
+        {
+            return Result.Fail("Characters not found");
+        }
+        var charactersDto = characters.Select(c => _characterMapper.ToDto(c)).ToList();
+        return Result.Ok(charactersDto);
     }
 
     public Task<Result<CharacterDto>> GetById(int id)
@@ -62,22 +69,34 @@ public class CharacterService : ICharacterService
         return Result.Ok(_characterMapper.ToCharacterCreatedDto(newCharacter));
     }
 
-    public Task<Character> Update(int id, Character character)
+    public async Task<Result<CharacterCreatedDto>> Update(int id, CharacterCreatedDto characterDto)
     {
-        var characterToUpdate = _context.Characters.FirstOrDefault(c => c.Id == id);
+        var characterToUpdate = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id);
         if (characterToUpdate == null)
         {
-            return Task.FromResult(character);
+            return Result.Fail<CharacterCreatedDto>("Character not found");
         }
-        characterToUpdate.Name = character.Name;
-        characterToUpdate.Surname = character.Surname;
-        characterToUpdate.IdGender = character.IdGender;
-        characterToUpdate.Phrases = character.Phrases;
-        characterToUpdate.PathImage = character.PathImage;
-        characterToUpdate.DateBirthDay = character.DateBirthDay;
+        characterToUpdate.Name = characterDto.Name;
+        characterToUpdate.Surname = characterDto.Surname;
+        var genderValid = await _context.Genders.FirstOrDefaultAsync(g => g.Id == characterDto.IdGender);
+        if (genderValid == null)
+        {
+            return Result.Fail<CharacterCreatedDto>("Gender not found");
+        }
+        var phrasesValid = await _context.Phrases.Where(p => characterDto.IdPhrases.Contains(p.Id)).ToListAsync();
+        if (phrasesValid.Count != characterDto.IdPhrases.Count)
+        {
+            return Result.Fail<CharacterCreatedDto>("Phrases not found");
+        }
+        characterToUpdate.NameRealComplete = characterDto.NameRealComplete;
+        characterToUpdate.IdGender = characterDto.IdGender;
+        characterToUpdate.Phrases = phrasesValid;
+        characterToUpdate.PathImage = characterDto.PathImage;
+        characterToUpdate.DateBirthDay = characterDto.DateBirthDay;
         _context.SaveChanges();
+
         _logger.LogDebug("Character updated successfully");
-        return Task.FromResult(characterToUpdate);
+        return Result.Ok(_characterMapper.ToCharacterCreatedDto(characterToUpdate));
     }
 
 
