@@ -19,6 +19,18 @@ public class PhraseController : ControllerResponse
         _phraseService = phraseService;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _phraseService.GetAll();
+        if (result.IsFailed)
+        {
+            var errorMessage = result.Errors[0].Message;
+            return ErrorResponse(errorMessage, StatusCodes.Status400BadRequest);
+        }
+        return SuccessResponse(result.Value);
+    }
+
     [HttpPost]
     public async Task<ActionResult> Add([FromBody] PhraseDto phrase)
     {
@@ -30,6 +42,7 @@ public class PhraseController : ControllerResponse
         }
         return SuccessResponse(result.Value);
     }
+
 
 
 
