@@ -1,10 +1,9 @@
 using api.Dtos;
-using FluentResults;
-using api.Models;
 using api.DbContextApp;
 using api.Mappers;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using FluentResults;
+
 
 namespace api.Services;
 
@@ -38,23 +37,34 @@ public class PhraseService : IPhraseService
     {
         if (phrase == null)
         {
+            _logger.LogWarning("Attempted to add a null phrase");
             return await Task.FromResult(Result.Fail("Phrase is null"));
         }
         var characterExists = await _context.Characters.AnyAsync(c => c.Id == phrase.IdCharacter);
         if (!characterExists)
         {
+            _logger.LogWarning("Attempted to add a phrase for a non-existent character with ID {CharacterId}", phrase.IdCharacter);
             return await Task.FromResult(Result.Fail("Character does not exist"));
         }
         var phraseEntity = _mapper.ToCreatedEntity(phrase);
+        if(phraseEntity.Content == null || phraseEntity.Content == "")
+        {
+            _logger.LogWarning("Attempted to add a phrase with null or empty content");
+            return await Task.FromResult(Result.Fail("Phrase content is null or empty"));
+        }
+        var verifyCharacter = await _context.Characters.FindAsync(phrase.IdCharacter);
+        if (verifyCharacter == null)
+        {
+            _logger.LogWarning("Attempted to add a phrase for a non-existent character with ID {CharacterId}", phrase.IdCharacter);
+            return await Task.FromResult(Result.Fail("Character does not exist"));
+        }
 
         await _context.Phrases.AddAsync(phraseEntity);
 
         await _context.SaveChangesAsync();
 
         _logger.LogDebug("Phrase added successfully");
-
         return await Task.FromResult(Result.Ok(_mapper.ToDto(phraseEntity)));
-
     }
 
 }
