@@ -10,6 +10,7 @@ services:
       - .:/app    # <--- MAPEADO: Sincroniza tu carpeta local con /app en el contenedor
     environment:
       - DOTNET_USE_POLLING_FILE_WATCHER=1 # Necesario en Linux/Lubuntu para detectar cambios de archivos
+      - ASPNETCORE_URLS=http://+:8080
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=db;Database=drakeandjosh;Username=dev;Password=chastyAdmin
     depends_on:

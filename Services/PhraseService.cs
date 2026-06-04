@@ -47,7 +47,7 @@ public class PhraseService : IPhraseService
             return await Task.FromResult(Result.Fail("Character does not exist"));
         }
         var phraseEntity = _mapper.ToCreatedEntity(phrase);
-        if(phraseEntity.Content == null || phraseEntity.Content == "")
+        if (phraseEntity.Content == null || phraseEntity.Content == "")
         {
             _logger.LogWarning("Attempted to add a phrase with null or empty content");
             return await Task.FromResult(Result.Fail("Phrase content is null or empty"));
@@ -65,6 +65,48 @@ public class PhraseService : IPhraseService
 
         _logger.LogDebug("Phrase added successfully");
         return await Task.FromResult(Result.Ok(_mapper.ToDto(phraseEntity)));
+    }
+
+    public async Task<Result<PhraseDto>> Update(int id, PhraseDto phrase)
+    {
+        var existingPhrase = await _context.Phrases.FindAsync(id);
+        if (existingPhrase == null)
+        {
+            _logger.LogWarning("Attempted to update a non-existent phrase with ID {PhraseId}", id);
+            return Result.Fail("Phrase not found");
+        }
+
+        if (phrase.Content == null || phrase.Content.Trim() == "")
+        {
+            _logger.LogWarning("Attempted to update a phrase with null or empty content for Phrase ID {PhraseId}", id);
+            return Result.Fail("Phrase content cannot be null or empty");
+        }
+
+        existingPhrase.Content = phrase.Content;
+        existingPhrase.IdCharacter = phrase.IdCharacter;
+
+        _context.Phrases.Update(existingPhrase);
+        await _context.SaveChangesAsync();
+
+        _logger.LogDebug("Phrase with ID {PhraseId} updated successfully", id);
+        return Result.Ok(_mapper.ToDto(existingPhrase));
+    }
+
+    public async Task<Result<PhraseDto>> Delete(int id)
+    {
+        var existingPhrase = await _context.Phrases.FindAsync(id);
+        if (existingPhrase == null)
+        {
+            _logger.LogWarning("Attempted to delete a non-existent phrase with ID {PhraseId}", id);
+            return Result.Fail("Phrase not found");
+        }
+
+        _context.Phrases.Remove(existingPhrase);
+        await _context.SaveChangesAsync();
+
+        _logger.LogDebug("Phrase with ID {PhraseId} deleted successfully", id);
+        return Result.Ok(_mapper.ToDto(existingPhrase));
+
     }
 
 }

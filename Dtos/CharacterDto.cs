@@ -10,6 +10,7 @@ public class CharacterDto
     public required string Surname { get; set; } = "Unknown";
     public required string NameRealComplete { get; set; } = "Unknown";
     public int IdGender { get; set; }
+    public string Gender { get; set; } = "Male";
     public BirthDay? DateBirthDay { get; set; }
     public string? PathImage { get; set; }
 }

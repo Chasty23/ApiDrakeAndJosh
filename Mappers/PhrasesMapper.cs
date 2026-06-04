@@ -1,6 +1,6 @@
-using Riok.Mapperly.Abstractions;
 using api.Models;
 using api.Dtos;
+using Riok.Mapperly.Abstractions;
 
 namespace api.Mappers;
 

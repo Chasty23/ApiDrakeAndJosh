@@ -12,7 +12,7 @@ using api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5000");
+//builder.WebHost.UseUrls("http://localhost:5000");
 
 builder.Services.AddControllers();
 

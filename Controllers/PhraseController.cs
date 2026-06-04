@@ -5,7 +5,6 @@ using api.Dtos;
 using api.Models;
 using FluentResults;
 
-
 namespace api.Controllers;
 
 [ApiController]
@@ -38,11 +37,32 @@ public class PhraseController : ControllerResponse
 
         if (result.IsFailed)
         {
-            return ErrorResponse("Error al agregar la frase", 400);
+            return ErrorResponse(result.Errors[0].Message, StatusCodes.Status400BadRequest);
         }
         return SuccessResponse(result.Value);
     }
 
+    [HttpPut("{id}")]
+    public async Task<ActionResult> Update(int id, [FromBody] PhraseDto phrase)
+    {
+        var result = await _phraseService.Update(id, phrase);
+        if (result.IsFailed)
+        {
+            return ErrorResponse(result.Errors[0].Message, StatusCodes.Status400BadRequest);
+        }
+        return SuccessResponse(result.Value);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+        var result = await _phraseService.Delete(id);
+        if (result.IsFailed)
+        {
+            return ErrorResponse(result.Errors[0].Message, StatusCodes.Status400BadRequest);
+        }
+        return SuccessResponse(result.Value);
+    }
 
 }
 

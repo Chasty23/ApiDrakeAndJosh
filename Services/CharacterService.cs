@@ -6,7 +6,6 @@ using api.DbContextApp;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-
 namespace api.Services;
 
 public class CharacterService : ICharacterService
@@ -30,6 +29,7 @@ public class CharacterService : ICharacterService
         {
             return Result.Fail("Characters not found");
         }
+
         var charactersDto = characters.Select(c => _characterMapper.ToDto(c)).ToList();
         return Result.Ok(charactersDto);
     }
@@ -64,20 +64,22 @@ public class CharacterService : ICharacterService
         }
 
         _context.Characters.Add(newCharacter);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         _logger.LogDebug("Character added successfully");
         return Result.Ok(_characterMapper.ToCharacterCreatedDto(newCharacter));
     }
 
     public async Task<Result<CharacterCreatedDto>> Update(int id, CharacterCreatedDto characterDto)
     {
+        if (characterDto == null)
+        {
+            return Result.Fail<CharacterCreatedDto>("Invalid character data");
+        }
         var characterToUpdate = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id);
         if (characterToUpdate == null)
         {
             return Result.Fail<CharacterCreatedDto>("Character not found");
         }
-        characterToUpdate.Name = characterDto.Name;
-        characterToUpdate.Surname = characterDto.Surname;
         var genderValid = await _context.Genders.FirstOrDefaultAsync(g => g.Id == characterDto.IdGender);
         if (genderValid == null)
         {
@@ -88,12 +90,15 @@ public class CharacterService : ICharacterService
         {
             return Result.Fail<CharacterCreatedDto>("Phrases not found");
         }
+
+        characterToUpdate.Name = characterDto.Name;
+        characterToUpdate.Surname = characterDto.Surname;
         characterToUpdate.NameRealComplete = characterDto.NameRealComplete;
         characterToUpdate.IdGender = characterDto.IdGender;
         characterToUpdate.Phrases = phrasesValid;
         characterToUpdate.PathImage = characterDto.PathImage;
         characterToUpdate.DateBirthDay = characterDto.DateBirthDay;
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         _logger.LogDebug("Character updated successfully");
         return Result.Ok(_characterMapper.ToCharacterCreatedDto(characterToUpdate));
